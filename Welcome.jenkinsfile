@@ -8,13 +8,12 @@ pipeline {
     }
     stage('Run Terraform') {
       steps {
-        if (isUnix()) 
-        {
-          sh 'terraform init'
+        if (isUnix()) {
+          steps {
+		  sh 'terraform init'
           sh 'terraform apply -auto-approve'
-        } 
-        else 
-        {
+		  }
+        } else {
           bat 'echo "Running on Windows"'
           bat 'terraform init'
           bat 'terraform apply -auto-approve'
