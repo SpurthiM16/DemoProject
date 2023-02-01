@@ -8,17 +8,21 @@ pipeline {
     }
     stage('Run Terraform') {
       steps {
-        sh 'terraform init'
-        sh 'terraform apply -auto-approve'
+        if (isUnix()) {
+		  sh "command"
+		} else {
+          bat 'terraform init'
+          bat 'terraform apply -auto-approve'
+		}
       }
     }
     stage('Deploy Web App') {
       steps {
         script {
-          ec2_instance_ip = sh(returnStdout: true, script: 'terraform output ec2_instance_ip').trim()
+          ec2_instance_ip = bat(returnStdout: true, script: 'terraform output ec2_instance_ip').trim()
         }
-        sh "scp -i C:/Spurthi/Exp/Linuxpemkey.pem -o StrictHostKeyChecking=no Welcome.sh ec2_user@${ec2_instance_ip}:~"
-        sh "ssh -i C:/Spurthi/Exp/Linuxpemkey.pem -o StrictHostKeyChecking=no ec2_user@${ec2_instance_ip} './Welcome.sh'"
+        bat "scp -i C:/Spurthi/Exp/Linuxpemkey.pem -o StrictHostKeyChecking=no Welcome.sh ec2_user@${ec2_instance_ip}:~"
+        bat "ssh -i C:/Spurthi/Exp/Linuxpemkey.pem -o StrictHostKeyChecking=no ec2_user@${ec2_instance_ip} './Welcome.sh'"
       }
     }
   }
