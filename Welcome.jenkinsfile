@@ -2,8 +2,8 @@ pipeline {
   agent any
   
   environment {
-    AWS_ACCESS_KEY_ID = 'AKIAU32HU5AK5ROUAFNL'
-    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_ACCESS_KEY_ID = ''
+    AWS_SECRET_ACCESS_KEY = ''
   }
   
   stages {
