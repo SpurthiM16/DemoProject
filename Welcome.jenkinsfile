@@ -9,11 +9,12 @@ pipeline {
     stage('Run Terraform') {
       steps {
         if (isUnix()) {
-		  sh "command"
-		} else {
+          sh 'terraform init'
+          sh 'terraform apply -auto-approve'
+        } else {
           bat 'terraform init'
           bat 'terraform apply -auto-approve'
-		}
+        }
       }
     }
     stage('Deploy Web App') {
