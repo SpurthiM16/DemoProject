@@ -1,7 +1,7 @@
 pipeline {
   agent any  
   environment {
-    AWS_PROFILE = 'spurthi'
+    AWS_PROFILE = 'SpurthiAWS'
   }
   stages {
     stage('Clone Git Repository') {
