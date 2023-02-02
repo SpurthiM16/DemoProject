@@ -11,6 +11,7 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
+  profile = "SpurthiAWS"
 }
 
 resource "aws_instance" "app_server" {
