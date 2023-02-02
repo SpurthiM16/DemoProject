@@ -1,8 +1,5 @@
 pipeline {
   agent any  
-  environment {
-    AWS_PROFILE = 'SpurthiAWS'
-  }
   stages {
     stage('Clone Git Repository') {
       steps {
