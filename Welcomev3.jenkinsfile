@@ -1,0 +1,42 @@
+pipeline {
+  agent any  
+  stages {
+    stage('Clone Git Repository') {
+      steps {
+        git url: 'https://github.com/SpurthiM16/DemoProject.git'
+      }
+    }
+    stage('Run Terraform') {
+      steps {
+        script {
+          try {
+            withCredentials([file(credentialsId: 'AWS_SHARED_CREDENTIALS_FILE', variable: 'AWS_SHARED_CREDENTIALS_FILE'), string(credentialsId: 'AWS_PROFILE', variable: 'AWS_PROFILE')]) {
+              withEnv(["AWS_SHARED_CREDENTIALS_FILE=${AWS_SHARED_CREDENTIALS_FILE}", "AWS_PROFILE=${AWS_PROFILE}"]) {
+                if (isUnix()) {
+                  sh 'terraform init'
+                  sh 'terraform apply -auto-approve'
+                } else {
+                  bat 'echo "Running on Windows"'
+                  bat 'terraform init'
+                  bat 'terraform apply -auto-approve'
+                }
+              }
+            }
+          } catch (e) {
+            currentBuild.result = "FAILED"
+            throw e
+          }
+        }
+      }
+    }
+    stage('Deploy Web App') {
+      steps {
+        script {
+          ec2_instance_ip = bat(returnStdout: true, script: 'terraform output ec2_instance_ip').trim()
+        }
+        bat "scp -i C:/Spurthi/Exp/Linuxpemkey.pem -o StrictHostKeyChecking=no Welcome.sh ec2_user@${ec2_instance_ip}:~"
+        bat "ssh -i C:/Spurthi/Exp/Linuxpemkey.pem -o StrictHostKeyChecking=no ec2_user@${ec2_instance_ip} './Welcome.sh'"
+      }
+    }
+  }
+}
