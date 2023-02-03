@@ -20,7 +20,7 @@ resource "aws_instance" "app_server" {
   vpc_security_group_ids = ["sg-0aa872805a96c30af"]
   subnet_id = "subnet-0da722220074863a9"
   
-  key_name = "linuxpemkey"
+  key_name = "Linuxpemkey"
   iam_instance_profile = "EC2Fullaccess"
 
   tags = {
