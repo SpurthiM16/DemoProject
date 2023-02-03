@@ -24,7 +24,7 @@ resource "aws_instance" "app_server" {
   iam_instance_profile = "EC2Fullaccess"
 
   tags = {
-    Name = "Welcome"
+    Name = "WelcomeAmantya"
   }
 }
 
