@@ -7,9 +7,14 @@ pipeline {
       }
     }
     stage('Run Terraform') {
-      environment {
-        env.AWS_SHARED_CREDENTIALS_FILE = credentials('AWS_SHARED_CREDENTIALS_FILE')
-        env.AWS_PROFILE = credentials('AWS_PROFILE')
+    def awsSharedCredentialsFile = credentials('AWS_SHARED_CREDENTIALS_FILE')
+	def awsProfile = credentials('AWS_PROFILE')
+
+	environment {
+    AWS_SHARED_CREDENTIALS_FILE = "${awsSharedCredentialsFile}"
+    env.AWS_PROFILE = "${awsProfile}"
+				}
+
       }
       steps {
         script {
