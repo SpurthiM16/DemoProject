@@ -19,6 +19,9 @@ resource "aws_instance" "app_server" {
   instance_type = "t2.micro"
   vpc_security_group_ids = ["sg-0aa872805a96c30af"]
   subnet_id = "subnet-0da722220074863a9"
+  
+  key_name = "linuxpemkey"
+  iam_instance_profile = "EC2Fullaccess"
 
   tags = {
     Name = "Welcome"
