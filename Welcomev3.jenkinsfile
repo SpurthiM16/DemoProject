@@ -34,8 +34,8 @@ pipeline {
         script {
           ec2_instance_ip = sh(returnStdout: true, script: 'terraform output ec2_instance_ip').trim()
         }
-        sh "scp -i /home/ec2-user/.aws/linuxpemkey.pem -o StrictHostKeyChecking=no Welcome.sh ec2_user@${ec2_instance_ip}:~"
-        sh "ssh -i /home/ec2-user/.aws/linuxpemkey.pem -o StrictHostKeyChecking=no ec2_user@${ec2_instance_ip} './Welcome.sh'"
+        sh "scp -i linuxpemkey.pem -o StrictHostKeyChecking=no Welcome.sh ec2_user@${ec2_instance_ip}:~"
+        sh "ssh -i linuxpemkey.pem -o StrictHostKeyChecking=no ec2_user@${ec2_instance_ip} './Welcome.sh'"
       }
     }
   }
