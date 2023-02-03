@@ -9,7 +9,7 @@ pipeline {
     stage('Run Terraform') {
       environment {
         AWS_SHARED_CREDENTIALS_FILE = "${System.getenv('user.home')}/.aws/credentials"
-		env.AWS_PROFILE = "SpurthiAWS"
+		env.AWS_PROFILE = 'SpurthiAWS'
       }
       steps {
 		script {
