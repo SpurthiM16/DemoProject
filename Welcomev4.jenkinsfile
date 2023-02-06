@@ -24,7 +24,7 @@ pipeline {
     stage('Deploy Web App') {
       steps {
 	sh '''
-	 ec2_instance_ip=$(terraform output ec2_instance_ip | tr ',' '\n')
+	 ec2_instance_ip = sh(returnStdout: true, script: 'terraform output ec2_instance_ip').trim()
 	 chmod 400 Linuxpemkey.pem
 	 chmod 777 Welcome.sh
          scp -i Linuxpemkey.pem -o StrictHostKeyChecking=no Welcome.sh ec2-user@${ec2_instance_ip}:~
