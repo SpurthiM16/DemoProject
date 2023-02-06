@@ -25,9 +25,7 @@ pipeline {
       steps {
 	sh '''
 	 ec2_instance_ip=$(terraform output ec2_instance_ip)
-	 echo $ec2_instance_ip
-	 var2=`sed -e 's/^"//' -e 's/"$//' <<<"$ec2_instance_ip"`
-	 echo $var2
+	 echo $ec2_instance_ip | sed 's/","/,/g; s/^"\|"$//g'
 	 chmod 400 Linuxpemkey.pem
 	 chmod 777 Welcome.sh
          scp -i Linuxpemkey.pem -o StrictHostKeyChecking=no Welcome.sh ec2-user@${ec2_instance_ip}:~
