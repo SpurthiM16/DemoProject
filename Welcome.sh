@@ -8,5 +8,5 @@ echo "Confirm Successful Installation"
 
 echo "Welcome to Amantya Technologies!" > index.html
 
-npm install -g http-server --prefix ~/npm
+npm install -g http-server -f --prefix ~/npm
 http-server -p 8055 &
